@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar = () => {
   const [isCracked, setIsCracked] = useState(false);
   const location = useLocation();
+  const { t, language, toggleLanguage } = useLanguage();
 
   const triggerCrack = () => {
     const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2215/2215-preview.mp3');
@@ -16,13 +18,13 @@ const Navbar = () => {
   };
 
   const services = [
-    { name: 'موشن جرافيك', path: '/services/motion-graphics' },
-    { name: 'مونتاج', path: '/services/montage' },
-    { name: 'تصوير إحترافي', path: '/services/photography' },
-    { name: 'تأجير إستوديو', path: '/services/studio-rental' },
-    { name: 'تصميم الويب', path: '/services/web-design' },
-    { name: 'كتابة المحتوى', path: '/services/content-writing' },
-    { name: 'التسويق', path: '/services/marketing' },
+    { name: t('service.motion'), path: '/services/motion-graphics' },
+    { name: t('service.montage'), path: '/services/montage' },
+    { name: t('service.photography'), path: '/services/photography' },
+    { name: t('service.studio'), path: '/services/studio-rental' },
+    { name: t('service.web'), path: '/services/web-design' },
+    { name: t('service.content'), path: '/services/content-writing' },
+    { name: t('service.marketing'), path: '/services/marketing' },
   ];
 
   return (
@@ -51,10 +53,10 @@ const Navbar = () => {
       `}</style>
 
       {/* جهة اليمين: اللوجو */}
-      <div className="flex items-center mr-12 pointer-events-auto">
+      <div className={`flex items-center ${language === 'ar' ? 'mr-12' : 'ml-12'} pointer-events-auto`}>
         <Link to="/" className="relative z-50">
           <img 
-            src="/public/images/Asset 3.png" 
+            src="/images/Asset 3.png" 
             alt="لوجو أقربلك ميديا" 
             className="h-16 w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity" 
           />
@@ -66,12 +68,10 @@ const Navbar = () => {
         className={`hidden lg:flex items-center glass-nav px-10 py-3 rounded-full gap-10 transition-all relative overflow-hidden pointer-events-auto ${isCracked ? 'animate-shake' : ''}`}
       >
         
-        {/* طبقة تأثير الزجاج المكسور العشوائي (محاكاة للصورة) */}
         {isCracked && (
           <div className="absolute inset-0 pointer-events-none z-0">
             <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 400 60" preserveAspectRatio="none">
               <g stroke="rgba(255,255,255,0.9)" strokeWidth="0.5" fill="none">
-                {/* شبكة العنكبوت المركزية */}
                 <path className="crack-line" d="M200 30 L180 15 L140 10 L80 0" />
                 <path className="crack-line" d="M200 30 L220 45 L260 55 L350 60" />
                 <path className="crack-line" d="M200 30 L160 40 L120 50 L40 55" />
@@ -80,8 +80,6 @@ const Navbar = () => {
                 <path className="crack-line" d="M200 30 L190 55 L175 60" />
                 <path className="crack-line" d="M200 30 L240 40 L280 45" />
                 <path className="crack-line" d="M200 30 L150 20 L110 15" />
-                
-                {/* تشققات فرعية عرضية لخلق مظهر "الشظايا" */}
                 <path className="crack-line" d="M190 20 L210 20" strokeWidth="0.3" />
                 <path className="crack-line" d="M180 35 L220 35" strokeWidth="0.3" />
                 <path className="crack-line" d="M170 25 L185 15" strokeWidth="0.2" />
@@ -98,7 +96,7 @@ const Navbar = () => {
           onClick={() => triggerCrack()}
           className={`text-base font-medium hover:text-blue-400 transition-colors relative z-10 ${location.pathname === '/' ? 'text-blue-400' : 'text-white'}`}
         >
-          الرئيسية
+          {t('nav.home')}
         </Link>
           
         <div className="relative group z-10">
@@ -107,25 +105,25 @@ const Navbar = () => {
             onClick={() => triggerCrack()}
             className={`text-base font-medium hover:text-blue-400 transition-colors flex items-center gap-1 cursor-pointer ${location.pathname.startsWith('/services') ? 'text-blue-400' : 'text-white'}`}
           >
-            خدماتنا
+            {t('nav.services')}
             <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
           </Link>
           
-          <div className="dropdown-content absolute top-full right-0 mt-4 w-56 glass-nav rounded-2xl overflow-hidden shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+          <div className={`dropdown-content absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-4 w-56 glass-nav rounded-2xl overflow-hidden shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300`}>
             <div className="flex flex-col py-2">
               <Link 
                 to="/services" 
                 onClick={() => triggerCrack()}
-                className="px-6 py-3 text-sm font-bold text-white hover:text-blue-400 hover:bg-white/5 transition-all text-right border-b border-white/10"
+                className={`px-6 py-3 text-sm font-bold text-white hover:text-blue-400 hover:bg-white/5 transition-all ${language === 'ar' ? 'text-right' : 'text-left'} border-b border-white/10`}
               >
-                اكتشف خدماتنا
+                {t('nav.discover')}
               </Link>
               {services.map((service, index) => (
                 <Link 
                   key={index} 
                   to={service.path} 
                   onClick={() => triggerCrack()}
-                  className="px-6 py-3 text-sm text-white/80 hover:text-blue-400 hover:bg-white/5 transition-all text-right border-b border-white/5 last:border-0"
+                  className={`px-6 py-3 text-sm text-white/80 hover:text-blue-400 hover:bg-white/5 transition-all ${language === 'ar' ? 'text-right' : 'text-left'} border-b border-white/5 last:border-0`}
                 >
                   {service.name}
                 </Link>
@@ -139,7 +137,7 @@ const Navbar = () => {
           onClick={() => triggerCrack()} 
           className={`text-base font-medium hover:text-blue-400 transition-colors relative z-10 ${location.pathname === '/about' ? 'text-blue-400' : 'text-white'}`}
         >
-          من نحن
+          {t('nav.about')}
         </Link>
         
         <Link 
@@ -147,14 +145,21 @@ const Navbar = () => {
           onClick={() => triggerCrack()} 
           className={`text-base font-medium hover:text-blue-400 transition-colors relative z-10 ${location.pathname === '/contact' ? 'text-blue-400' : 'text-white'}`}
         >
-          تواصل معنا
+          {t('nav.contact')}
         </Link>
       </nav>
 
       {/* جهة اليسار: الأيقونات */}
-      <div className="flex items-center gap-6 ml-12 pointer-events-auto">
-        <div className="w-14 h-7 bg-white/5 border border-white/10 rounded-full p-1 flex items-center cursor-pointer relative hover:bg-white/10 transition">
-          <div className="w-5 h-5 bg-gray-400 rounded-full translate-x-1"></div>
+      <div className={`flex items-center gap-6 ${language === 'ar' ? 'ml-12' : 'mr-12'} pointer-events-auto`}>
+        {/* زر تغيير اللغة */}
+        <div 
+          onClick={toggleLanguage}
+          className="w-14 h-7 bg-white/5 border border-white/10 rounded-full p-1 flex items-center cursor-pointer relative hover:bg-white/10 transition group"
+        >
+          <div className={`w-5 h-5 bg-gray-400 rounded-full transition-transform duration-300 ${language === 'ar' ? 'translate-x-8' : 'translate-x-1'}`}></div>
+          <span className={`absolute ${language === 'ar' ? 'left-2' : 'right-2'} text-[10px] font-bold text-white/40 uppercase pointer-events-none`}>
+            {language === 'ar' ? 'EN' : 'AR'}
+          </span>
         </div>
 
         <Link to="/contact">

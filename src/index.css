@@ -1,3 +1,6 @@
+/* استيراد الخطوط في البداية */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* إعدادات Tailwind */
 @tailwind base;
 @tailwind components;
@@ -8,18 +11,16 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #080911; /* تغيير من #242424 إلى لونك المفضل */
-
+  background-color: #080911;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* إعادة تعيين body */
+/* إعدادات الجسم الأساسية */
 body {
   margin: 0;
   min-width: 100vw;
@@ -27,6 +28,17 @@ body {
   background: #080911;
   color: white;
   overflow-x: hidden;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+/* عندما تكون اللغة إنجليزية */
+[lang="en"] body,
+body[lang="en"] {
+  direction: ltr;
+  text-align: left;
+  font-family: 'Inter', 'Cairo', sans-serif;
 }
 
 /* تأثيرات الحركة */
@@ -69,6 +81,8 @@ body {
   margin: 0;
   padding: 0;
   background: #080911;
+  display: flex;
+  flex-direction: column;
 }
 
 /* تحسين الروابط */
@@ -95,4 +109,22 @@ button {
 }
 button:hover {
   border-color: #646cff;
+}
+
+/* إضافة فونت مخصص */
+@font-face {
+  font-family: 'TheYearOfHandicrafts';
+  src: url('./fonts/TheYearofHandicrafts.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ربط الفونت بالعناصر */
+body[lang="ar"] h1,
+body[lang="ar"] h2,
+body[lang="ar"] h3,
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3 {
+  font-family: 'TheYearOfHandicrafts', 'Cairo', sans-serif;
 }

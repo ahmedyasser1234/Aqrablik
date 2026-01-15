@@ -1,37 +1,96 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>أقربلك ميديا - Aqrablik Media</title>
+    
+    <!-- إضافة Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- إضافة تخصيص Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'space-blue': '#080911',
+              'nebula-purple': '#4f46e5',
+              'cosmic-cyan': '#06b6d4',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'orbit': 'orbit 20s linear infinite',
+              'pulse-slow': 'pulse 3s ease-in-out infinite',
+            },
+            fontFamily: {
+              'cairo': ['Cairo', 'sans-serif'],
+              'inter': ['Inter', 'sans-serif'],
+              'handcraft': ['TheYearOfHandicrafts', 'Cairo', 'sans-serif'],
+            },
+            backgroundImage: {
+              'space-gradient': 'linear-gradient(135deg, #080911 0%, #0a0b1a 50%, #080911 100%)',
+              'nebula-gradient': 'radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.1) 0%, transparent 50%)',
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- إضافة خطوط Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- إضافة Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- إضافة CSS مخصص -->
     <style>
+      /* فونت مخصص */
       @font-face {
         font-family: 'TheYearOfHandicrafts';
-        src: url('./fonts/TheYearofHandicrafts.otf') format('opentype');
+        src: url('/fonts/TheYearofHandicrafts.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
+        font-display: swap;
       }
 
+      /* إعدادات أساسية */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* إعدادات الجسم - ستتغير ديناميكياً حسب اللغة */
       body {
-        font-family: 'TheYearOfHandicrafts', 'Cairo', sans-serif;
         background-color: #080911;
         overflow-x: hidden;
         margin: 0;
         cursor: none; /* إخفاء الماوس الافتراضي */
+        min-height: 100vh;
+        transition: all 0.3s ease;
       }
       
       /* التأكد من إخفاء الماوس على الروابط أيضاً */
-      a, button, [role="button"] {
+      a, button, [role="button"], input, textarea {
         cursor: none !important;
       }
 
+      /* تأثيرات مخصصة */
       .glow-text {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.15);
+        text-shadow: 
+          0 0 20px rgba(255, 255, 255, 0.3), 
+          0 0 40px rgba(255, 255, 255, 0.15),
+          0 0 60px rgba(59, 130, 246, 0.1);
       }
+      
+      /* تأثير الطفو */
       @keyframes float {
         0% { transform: translateY(0px) rotate(0deg); }
         50% { transform: translateY(-20px) rotate(5deg); }
@@ -40,6 +99,8 @@
       .animate-float {
         animation: float 6s ease-in-out infinite;
       }
+      
+      /* تأثير ناعم */
       @keyframes subtle-bounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-5px); }
@@ -47,11 +108,24 @@
       .animate-subtle-bounce {
         animation: subtle-bounce 3s ease-in-out infinite;
       }
+      
+      /* تأثير المدار */
+      @keyframes orbit {
+        0% { transform: translate(-50%, -50%) rotate(0deg) translateX(200px) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg) translateX(200px) rotate(-360deg); }
+      }
+      .animate-orbit {
+        animation: orbit 20s linear infinite;
+      }
+      
+      /* تأثير الزجاج */
       .glass-nav {
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
+      
+      /* تأثير القائمة المنسدلة */
       .dropdown-content {
         visibility: hidden;
         opacity: 0;
@@ -65,10 +139,168 @@
         transform: translateY(0);
         pointer-events: auto;
       }
+      
+      /* إخفاء شريط التمرير */
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      
+      /* تأثير التدرج اللوني */
+      .gradient-bg {
+        background: linear-gradient(135deg, #080911 0%, #0a0b1a 50%, #080911 100%);
+      }
+      
+      /* تأثير الوميض */
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      .animate-pulse-slow {
+        animation: pulse 3s ease-in-out infinite;
+      }
+      
+      /* تأثير الكتابة */
+      @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+      }
+      
+      /* تأثير المسح */
+      @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: white }
+      }
+      
+      /* تحسينات للشاشات الصغيرة */
+      @media (max-width: 768px) {
+        .mobile-center {
+          text-align: center;
+          justify-content: center;
+        }
+        .mobile-col {
+          flex-direction: column;
+        }
+      }
+      
+      /* تحسينات للطباعة */
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+      }
+      
+      /* إصلاحات لمتصفح Safari */
+      @supports (-webkit-touch-callout: none) {
+        .safari-fix {
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -ms-backface-visibility: hidden;
+          backface-visibility: hidden;
+          -webkit-transform: translateZ(0);
+          -moz-transform: translateZ(0);
+          -ms-transform: translateZ(0);
+          -o-transform: translateZ(0);
+          transform: translateZ(0);
+        }
+      }
+      
+      /* تحسينات الأداء */
+      .will-change-transform {
+        will-change: transform;
+      }
+      
+      /* إخفاء العناصر أثناء التحميل */
+      .loading {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .loaded {
+        opacity: 1;
+      }
+      
+      /* تأثيرات خاصة للفيديو */
+      .video-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+      .video-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%);
+        z-index: 1;
+        pointer-events: none;
+      }
     </style>
   </head>
+  
+  <!-- الاتجاه سيتغير ديناميكياً بواسطة JavaScript -->
   <body>
+    <!-- جذر React التطبيق -->
     <div id="root"></div>
+    
+    <!-- ملف JavaScript الرئيسي -->
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- تحميل سكريبتات إضافية -->
+    <script>
+      // دالة للتحميل السلس
+      document.addEventListener('DOMContentLoaded', function() {
+        // إضافة فئة تحميل للجسم
+        document.body.classList.add('loaded');
+        
+        // الكشف عن متصفح Safari
+        if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+          document.body.classList.add('safari-fix');
+        }
+        
+        // إضافة دعم للشاشات التي تعمل باللمس
+        if ('ontouchstart' in window) {
+          document.body.classList.add('touch-device');
+        }
+      });
+      
+      // معالجة أخطاء الصور
+      document.addEventListener('error', function(e) {
+        if (e.target.tagName === 'IMG') {
+          e.target.style.opacity = '0.3';
+          e.target.style.filter = 'grayscale(100%)';
+        }
+      }, true);
+    </script>
+    
+    <!-- إضافة لصفحات التواصل الاجتماعي -->
+    <meta property="og:title" content="أقربلك ميديا - Aqrablik Media">
+    <meta property="og:description" content="رحلتك الإبداعية خارج الكوكب - Your creative journey off-planet">
+    <meta property="og:image" content="/images/og-image.png">
+    <meta property="og:url" content="https://aqrablik.com">
+    <meta property="og:type" content="website">
+    
+    <!-- إضافة لأيقونة الموقع -->
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    
+    <!-- إضافة لـ PWA (تطبيقات الويب التقدمية) -->
+    <meta name="theme-color" content="#080911">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- إضافة لأدوات التحليل (Google Analytics مثال) -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
   </body>
 </html>

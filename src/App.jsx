@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
-// حذف استيراد Hero و Goals منفردة لأنها الآن داخل Home
 import ServicesPage from './pages/ServicesPage.jsx';
 import BackgroundEffects from './components/BackgroundEffects.jsx';
 import MotionGraphicsPage from './pages/MotionGraphicsPage.jsx';
@@ -14,23 +13,25 @@ import MarketingPage from './pages/MarketingPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import SocialSidebar from './components/SocialSidebar.jsx';
 import CursorEffect from './components/CursorEffect.jsx';
-
-// الصفحات الجديدة
 import AboutPage from './pages/AboutPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
-import Home from './pages/Home.jsx'; // استيراد Home الجديد الذي يحتوي على كل المكونات
-import Footer from './components/footer.jsx'; // إضافة استيراد الفوتر الجديد
+import Home from './pages/Home.jsx';
+import Footer from './components/footer.jsx';
 
 const App = () => {
   return (
-    <div className="min-h-screen text-white relative bg-[#080911] overflow-x-hidden">
+    <div className="relative min-h-screen flex flex-col bg-[#080911] overflow-x-hidden">
+      {/* الخلفية المتحركة */}
       <BackgroundEffects />
       <CursorEffect />
       <ScrollToTop />
-      <Navbar />
       <SocialSidebar />
       
-      <main className="relative z-10 flex-grow">
+      {/* النافبار في الأعلى */}
+      <Navbar />
+      
+      {/* المحتوى الرئيسي - يأخذ المساحة المتبقية */}
+      <main className="flex-grow relative z-10">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<ServicesPage />} />
@@ -41,14 +42,12 @@ const App = () => {
           <Route path="/services/web-design" element={<WebDesignPage />} />
           <Route path="/services/content-writing" element={<ContentWritingPage />} />
           <Route path="/services/marketing" element={<MarketingPage />} />
-          
-          {/* الصفحات الجديدة */}
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
       
-      {/* إضافة الفوتر الجديد بدلاً من الفوتر القديم */}
+      {/* الفوتر في الأسفل */}
       <Footer />
     </div>
   );
