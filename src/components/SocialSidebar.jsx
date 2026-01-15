@@ -6,17 +6,19 @@ const SocialSidebar = () => {
     { id: 'tiktok', name: 'TikTok', icon: '/images/Asset 16.png', url: 'https://www.tiktok.com/@aqrablaak' },
     { id: 'instagram', name: 'Instagram', icon: '/images/insta.png', url: 'https://www.instagram.com/aqrablaak/' },
     { id: 'X', name: 'X', icon: '/images/Asset 17.png', url: 'https://x.com/aqrablaak' },
-    { id: 'youtyube', name: 'youtube', icon: '/images/Asset 18.png', url: 'https://www.youtube.com/@aqrablaak' },
+    { id: 'youtube', name: 'youtube', icon: '/images/Asset 18.png', url: 'https://www.youtube.com/@aqrablaak' },
     { id: 'whatsapp', name: 'WhatsApp', icon: '/images/Asset 14.png', url: 'https://wa.me/201099822822' }, 
     { id: 'phone', name: 'Phone', icon: '/images/phon.png', url: 'tel:+201099822822' }, 
   ];
 
-  // إضافة console.log للتحقق من المسارات
-  console.log('=== SocialSidebar Images Path Check ===');
-  socialLinks.forEach((link, index) => {
-    console.log(`Image ${index + 1} (${link.name}): ${link.icon}`);
-  });
-  console.log('========================================');
+  // إضافة console.log للتحقق
+  React.useEffect(() => {
+    console.log('=== SocialSidebar Images Path Check ===');
+    socialLinks.forEach((link, index) => {
+      console.log(`Image ${index + 1} (${link.name}): ${link.icon}`);
+    });
+    console.log('========================================');
+  }, []);
 
   return (
     <div className="fixed left-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-[100] pointer-events-auto">
@@ -36,19 +38,14 @@ const SocialSidebar = () => {
             animationDelay: `${index * 0.2}s` 
           }}
         >
-          {/* الصورة هي الأيقونة الصخرية بالكامل */}
           <img 
             src={social.icon} 
             alt={social.name} 
             className="w-full h-full object-contain transition-transform duration-500 group-hover:rotate-12"
             onError={(e) => {
-              // تسجيل خطأ في الصورة
-              console.error(`Failed to load image: ${social.icon}`);
-              
-              // حل بديل في حال لم يتم إضافة الصورة بعد: يظهر الحرف الأول داخل دائرة بسيطة
-              const target = e.target;
-              target.style.display = 'none';
-              const parent = target.parentElement;
+              console.error(`❌ Failed to load image: ${social.icon}`);
+              e.target.style.display = 'none';
+              const parent = e.target.parentElement;
               if (parent && !parent.querySelector('.fallback')) {
                 const span = document.createElement('span');
                 span.className = 'fallback flex items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white font-bold border border-white/20';
@@ -57,7 +54,7 @@ const SocialSidebar = () => {
               }
             }}
             onLoad={() => {
-              console.log(`Successfully loaded image: ${social.icon}`);
+              console.log(`✅ Successfully loaded: ${social.icon}`);
             }}
           />
         </a>
